@@ -3,6 +3,7 @@
 Here's a simple working contact form code example for Svelte with Web3Forms
 
 `
+
 <script>
 let status = $state("");
 

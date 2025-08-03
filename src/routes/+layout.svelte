@@ -6,6 +6,8 @@
 </script>
 
 <svelte:head>
+	<title>Movie Club</title>
+	<meta name="description" content="A modern movie discovery and voting platform" />
 	<link rel="icon" href={favicon} />
 </svelte:head>
 

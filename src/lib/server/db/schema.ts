@@ -1,4 +1,4 @@
-import { pgTable, serial, integer, text, timestamp } from 'drizzle-orm/pg-core';
+import { pgTable, serial, integer, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 export const user = pgTable('user', {
 	id: text('id').primaryKey(),
@@ -15,6 +15,29 @@ export const session = pgTable('session', {
 	expiresAt: timestamp('expires_at', { withTimezone: true, mode: 'date' }).notNull()
 });
 
-export type Session = typeof session.$inferSelect;
+export const movie = pgTable('movie', {
+	id: serial('id').primaryKey(),
+	title: varchar('title', { length: 255 }).notNull(),
+	year: integer('year').notNull(),
+	posterUrl: varchar('poster_url', { length: 255 }),
+	summary: text('summary'),
+	imdbId: varchar('imdb_id', { length: 255 }),
+	genre: varchar('genre', { length: 255 }),
+	director: varchar('director', { length: 255 })
+});
 
+export const userLike = pgTable('user_like', {
+	id: serial('id').primaryKey(),
+	userId: text('user_id')
+		.notNull()
+		.references(() => user.id),
+	movieId: integer('movie_id')
+		.notNull()
+		.references(() => movie.id),
+	createdAt: timestamp('created_at', { withTimezone: true, mode: 'date' }).notNull().defaultNow()
+});
+
+export type Session = typeof session.$inferSelect;
 export type User = typeof user.$inferSelect;
+export type Movie = typeof movie.$inferSelect;
+export type UserLike = typeof userLike.$inferSelect;

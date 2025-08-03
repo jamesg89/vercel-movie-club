@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npm run dev:*)",
+      "mcp__github_com_browserless_puppeteer-mcp-server__puppeteer_connect_active_tab",
+      "Bash(start chrome.exe --remote-debugging-port=9222 http://localhost:5173)",
+      "Bash(npm run check:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run format:*)",
+      "Bash(npm run:*)",
+      "Bash(timeout 10 npm run dev)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "github.com/browserless/puppeteer-mcp-server",
+    "github.com/modelcontextprotocol/server-sequential-thinking"
+  ]
+}

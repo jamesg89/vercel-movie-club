@@ -108,11 +108,9 @@ When creating new components:
 <form on:submit={handleSubmit}>
 ```
 
-
 ### Documentation Access
 
 Check docs folder for any documentation.
-
 
 ## Form Standards
 
@@ -161,6 +159,7 @@ Reference the docs/web3forms-svelte5.md file for complete implementation example
 ### Responsive Design Verification (MANDATORY)
 
 **MUST verify responsiveness across:**
+
 - **Small devices** (320px-768px): Mobile phones
 - **Medium devices** (768px-1024px): Tablets
 - **Large devices** (1024px+): Desktops
@@ -178,7 +177,7 @@ Reference the docs/web3forms-svelte5.md file for complete implementation example
 - ❌ Creating files unnecessarily
 - ❌ TypeScript `any` type usage
 - ❌ Custom form backends (use Web3Forms only)
-- ❌ ShadCN/UI, DaisyUI or other UI libraries 
+- ❌ ShadCN/UI, DaisyUI or other UI libraries
 - ❌ Exceeding deployment provider (Vercel or Cloudflare)'s resource limits
 - ❌ Non-responsive designs or layouts
 - ❌ Skipping screenshot evaluation during UI development
@@ -189,11 +188,12 @@ Reference the docs/web3forms-svelte5.md file for complete implementation example
 
 - Real API keys go in `.env` files (never commit these)
 
-
 ## Project Documentation
 
 - Product Requirements: See `docs/PRD.md`
 - Authentication Doc: See `docs/lucia-auth.md`
 - Form Submission Doc: See 'web3forms-svelte5.md'
+
+```
 
 ```
