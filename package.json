@@ -20,7 +20,10 @@
 		"db:studio": "drizzle-kit studio",
 		"db:seed": "tsx scripts/seed-db.ts",
 		"db:init": "tsx scripts/init-db.ts",
-		"setup": "tsx scripts/init-db.ts"
+		"setup": "tsx scripts/init-db.ts",
+		"deploy": "vercel --prod",
+		"deploy:setup": "tsx scripts/deploy-setup.ts",
+		"pre-deploy": "tsx scripts/pre-deploy.ts"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",
