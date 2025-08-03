@@ -1,0 +1,16 @@
+{
+	"mcpServers": {
+		"github.com/browserless/puppeteer-mcp-server": {
+			"command": "cmd",
+			"args": ["/c", "npx", "-y", "puppeteer-mcp-server@latest"],
+			"disabled": false,
+			"autoApprove": []
+		},
+		"github.com/modelcontextprotocol/server-sequential-thinking": {
+			"command": "cmd",
+			"args": ["/c", "npx", "-y", "@modelcontextprotocol/server-sequential-thinking@latest"],
+			"disabled": false,
+			"autoApprove": []
+		}
+	}
+}
