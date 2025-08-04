@@ -9,6 +9,11 @@
 	}
 
 	let { user, showLikesButton = true }: Props = $props();
+
+	function toggleMobileMenu() {
+		const menu = document.getElementById('mobile-menu');
+		menu?.classList.toggle('hidden');
+	}
 </script>
 
 <header class="bg-white shadow-sm">
@@ -62,14 +67,50 @@
 			</div>
 			<div class="flex items-center space-x-4">
 				<span class="hidden text-gray-700 md:inline">Welcome, {user.username}!</span>
-				{#if showLikesButton}
+				
+				<!-- Navigation Links -->
+				<nav class="hidden space-x-2 md:flex">
 					<a
-						href="/likes"
-						class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+						href="/"
+						class="rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
 					>
-						My Likes
+						All Movies
 					</a>
-				{/if}
+					<a
+						href="/top-liked"
+						class="rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
+					>
+						Top Liked
+					</a>
+					<a
+						href="/requests"
+						class="rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
+					>
+						Requests
+					</a>
+					{#if showLikesButton}
+						<a
+							href="/likes"
+							class="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700"
+						>
+							My Likes
+						</a>
+					{/if}
+				</nav>
+
+				<!-- Mobile Menu Button -->
+				<div class="md:hidden">
+					<button
+						type="button"
+						class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
+						onclick={toggleMobileMenu}
+					>
+						<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+						</svg>
+					</button>
+				</div>
+
 				<form method="post" action="/logout" use:enhance>
 					<button
 						type="submit"
@@ -78,6 +119,38 @@
 						Sign Out
 					</button>
 				</form>
+			</div>
+		</div>
+
+		<!-- Mobile Menu -->
+		<div id="mobile-menu" class="hidden border-t border-gray-200 pb-3 pt-4 md:hidden">
+			<div class="space-y-1 px-2">
+				<a
+					href="/"
+					class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100"
+				>
+					All Movies
+				</a>
+				<a
+					href="/top-liked"
+					class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100"
+				>
+					Top Liked
+				</a>
+				<a
+					href="/requests"
+					class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100"
+				>
+					Requests
+				</a>
+				{#if showLikesButton}
+					<a
+						href="/likes"
+						class="block rounded-md px-3 py-2 text-base font-medium text-blue-600 hover:bg-blue-50"
+					>
+						My Likes
+					</a>
+				{/if}
 			</div>
 		</div>
 	</div>

@@ -13,15 +13,30 @@
 
 	let searchTitle = $state(data.searchTitle);
 	let searchYear = $state(data.searchYear);
+	let sortBy = $state('title'); // Default sort by title
 
-	// Filter movies based on search criteria
+	// Filter and sort movies based on search criteria and sort option
 	let filteredMovies = $derived(() => {
-		return data.movies.filter((movie) => {
+		let filtered = data.movies.filter((movie) => {
 			const titleMatch =
 				!searchTitle || movie.title.toLowerCase().includes(searchTitle.toLowerCase());
 			const yearMatch = !searchYear || movie.year.toString().includes(searchYear);
 			return titleMatch && yearMatch;
 		});
+
+		// Apply sorting
+		switch (sortBy) {
+			case 'year-latest':
+				return filtered.sort((a, b) => b.year - a.year);
+			case 'year-oldest':
+				return filtered.sort((a, b) => a.year - b.year);
+			case 'genre':
+				return filtered.sort((a, b) => (a.genre || '').localeCompare(b.genre || ''));
+			case 'likes':
+				return filtered.sort((a, b) => b.totalLikes - a.totalLikes);
+			default:
+				return filtered.sort((a, b) => a.title.localeCompare(b.title));
+		}
 	});
 
 	async function handleSearch() {
@@ -36,6 +51,7 @@
 	function clearSearch() {
 		searchTitle = '';
 		searchYear = '';
+		sortBy = 'title';
 		handleSearch();
 	}
 </script>
@@ -46,8 +62,8 @@
 	<!-- Search/Filter Section -->
 	<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 		<div class="mb-8 rounded-lg bg-white p-6 shadow">
-			<h2 class="mb-4 text-lg font-medium text-gray-900">Search Movies</h2>
-			<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+			<h2 class="mb-4 text-lg font-medium text-gray-900">Search & Filter Movies</h2>
+			<div class="grid grid-cols-1 gap-4 md:grid-cols-4">
 				<div>
 					<label for="title-search" class="mb-2 block text-sm font-medium text-gray-700">
 						Movie Title
@@ -73,6 +89,22 @@
 						class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
 						oninput={handleSearch}
 					/>
+				</div>
+				<div>
+					<label for="sort-select" class="mb-2 block text-sm font-medium text-gray-700">
+						Sort By
+					</label>
+					<select
+						id="sort-select"
+						bind:value={sortBy}
+						class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+					>
+						<option value="title">Title (A-Z)</option>
+						<option value="year-latest">Year (Latest)</option>
+						<option value="year-oldest">Year (Oldest)</option>
+						<option value="genre">Genre</option>
+						<option value="likes">Most Liked</option>
+					</select>
 				</div>
 				<div class="flex items-end">
 					<button
@@ -126,7 +158,14 @@
 						>
 							{movie.title}
 						</h3>
-						<p class="mb-3 text-sm text-gray-600">{movie.year}</p>
+						<div class="mb-3 flex items-center justify-between">
+							<p class="text-sm text-gray-600">{movie.year}</p>
+							{#if movie.genre}
+								<span class="rounded-full bg-blue-100 px-2 py-1 text-xs text-blue-800">
+									{movie.genre}
+								</span>
+							{/if}
+						</div>
 
 						{#if movie.summary}
 							<p
@@ -136,6 +175,16 @@
 								{movie.summary}
 							</p>
 						{/if}
+
+						<!-- Total Likes Counter -->
+						<div class="mb-3 flex items-center text-xs text-gray-500">
+							<svg class="mr-1 h-3 w-3 fill-current" viewBox="0 0 24 24">
+								<path
+									d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+								/>
+							</svg>
+							{movie.totalLikes} {movie.totalLikes === 1 ? 'like' : 'likes'}
+						</div>
 
 						<!-- Like Button -->
 						<form method="post" action="?/toggleLike" use:enhance>

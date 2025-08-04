@@ -12,7 +12,8 @@
       "Bash(timeout 10 npm run dev)",
       "Bash(npx tsx:*)",
       "Bash(rm:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(\"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\" --remote-debugging-port=9222 http://localhost:5173)"
     ]
   },
   "enableAllProjectMcpServers": true,

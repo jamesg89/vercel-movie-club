@@ -1,7 +1,7 @@
 import { redirect, fail } from '@sveltejs/kit';
 import { db } from '$lib/server/db';
 import { movie, userLike } from '$lib/server/db/schema';
-import { eq, and } from 'drizzle-orm';
+import { eq, and, count } from 'drizzle-orm';
 import { invalidateSession, deleteSessionTokenCookie } from '$lib/server/auth';
 import type { PageServerLoad, Actions } from './$types';
 
@@ -14,16 +14,22 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 	const searchTitle = url.searchParams.get('title') || '';
 	const searchYear = url.searchParams.get('year') || '';
 
-	// Fetch all movies
-	let moviesQuery = db.select().from(movie);
-
-	// Apply filters if provided
-	if (searchTitle || searchYear) {
-		// For now, return all movies and filter client-side
-		// In production, you'd want to implement database-level filtering
-	}
-
-	const movies = await moviesQuery;
+	// Fetch all movies with total likes count
+	const movies = await db
+		.select({
+			id: movie.id,
+			title: movie.title,
+			year: movie.year,
+			posterUrl: movie.posterUrl,
+			summary: movie.summary,
+			imdbId: movie.imdbId,
+			genre: movie.genre,
+			director: movie.director,
+			totalLikes: count(userLike.id)
+		})
+		.from(movie)
+		.leftJoin(userLike, eq(movie.id, userLike.movieId))
+		.groupBy(movie.id);
 
 	// Get user's liked movies
 	const userLikes = await db
