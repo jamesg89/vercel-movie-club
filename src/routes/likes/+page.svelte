@@ -10,7 +10,7 @@
 	let { data }: Props = $props();
 </script>
 
-<Header user={data.user} showLikesButton={false} />
+<Header user={data.user} />
 
 	<!-- Content -->
 	<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -58,18 +58,25 @@
 					<div
 						class="overflow-hidden rounded-lg bg-white shadow-md transition-shadow duration-200 hover:shadow-lg"
 					>
-						<!-- Placeholder for movie poster -->
-						<div class="flex h-64 w-full items-center justify-center bg-gray-200">
-							<div class="p-4 text-center text-gray-500">
-								<svg class="mx-auto mb-2 h-12 w-12" fill="currentColor" viewBox="0 0 20 20">
-									<path
-										fill-rule="evenodd"
-										d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-										clip-rule="evenodd"
-									></path>
-								</svg>
-								<span class="text-sm">No Image</span>
-							</div>
+						<div class="flex h-64 w-full items-center justify-center" style="background-color: #f9fafc;">
+							{#if movie.posterUrl}
+								<img
+									src={movie.posterUrl}
+									alt={movie.title}
+									class="h-full w-full object-cover"
+								/>
+							{:else}	
+								<div class="p-4 text-center" style="color: #111111;">
+									<svg class="mx-auto mb-2 h-12 w-12" fill="currentColor" viewBox="0 0 20 20">
+										<path
+											fill-rule="evenodd"
+											d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+											clip-rule="evenodd"
+										></path>
+									</svg>
+									<span class="text-sm">No Image</span>
+								</div>
+							{/if}
 						</div>
 
 						<div class="p-4">

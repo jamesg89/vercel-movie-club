@@ -69,7 +69,7 @@
 			<h2 class="mb-4 text-lg font-medium" style="color: #000000;">Request a Movie</h2>
 			
 			{#if status}
-				<div class="mb-4 rounded-md p-4" style="{status.includes('success') ? 'background-color: #F7ADC8;' : 'background-color: #F7ADC8; border: 2px solid #111111;'}">
+				<div class="mb-4 rounded-md p-4" style="{status.includes('success') ? 'background-color: #5cb85c;' : 'background-color: #F7ADC8; border: 2px solid #111111;'}">
 					<div class="flex">
 						<svg class="h-5 w-5" style="color: #111111;" viewBox="0 0 20 20" fill="currentColor">
 							{#if status.includes('success')}
@@ -86,7 +86,7 @@
 			{/if}
 
 			<form onsubmit={handleSubmit}>
-				<input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+				<input type="hidden" name="access_key" value="e8624904-c31f-43eb-a896-f5b500c29f5a">
 				<input type="hidden" name="subject" value="Movie Request from Trap Movie Club">
 				<input type="hidden" name="from_name" value="Trap Movie Club">
 				<input type="hidden" name="redirect" value="false">

@@ -13,7 +13,10 @@
       "Bash(npx tsx:*)",
       "Bash(rm:*)",
       "Bash(mkdir:*)",
-      "Bash(\"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\" --remote-debugging-port=9222 http://localhost:5173)"
+      "Bash(\"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\" --remote-debugging-port=9222 http://localhost:5173)",
+      "Bash(start chrome.exe --remote-debugging-port=9222 http://localhost:5174)",
+      "Bash(\"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\" --remote-debugging-port=9222 http://localhost:5174)",
+      "Bash(curl:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

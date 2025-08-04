@@ -71,10 +71,12 @@
 					{#if showLikesButton}
 						<a
 							href="/likes"
-							class="rounded-md px-3 py-2 text-sm font-medium transition-colors"
+							class="rounded-md px-3 py-2 text-sm font-medium transition-colors {isActivePage('/likes') 
+								? 'text-black' 
+								: 'hover:text-black'}"
 							style="{isActivePage('/likes') 
-								? 'background-color: #F7ADC8; color: #000000;' 
-								: 'background-color: #F7ADC8; color: #111111;'}"
+								? 'background-color: #FDCA5A; color: #000000;' 
+								: 'color: #111111;'}"
 						>
 							My Likes
 						</a>
@@ -142,8 +144,8 @@
 						href="/likes"
 						class="block rounded-md px-3 py-2 text-base font-medium transition-colors"
 						style="{isActivePage('/likes') 
-							? 'background-color: #F7ADC8; color: #000000;' 
-							: 'background-color: #F7ADC8; color: #111111;'}"
+							? 'background-color: #FDCA5A; color: #000000;' 
+							: 'color: #111111;'}"
 					>
 						My Likes
 					</a>
