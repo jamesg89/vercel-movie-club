@@ -1,15 +1,20 @@
 {
-	"keep": {
-		"days": true,
-		"amount": 14
-	},
-	"auditLog": "C:\\Users\\User\\Documents\\2A SVELTEKIT WEB DEV\\plex-vercel-v2\\logs\\.2b6261404bd93f3c7c5c9c96385311f1736a2570-audit.json",
-	"files": [
-		{
-			"date": 1754185615384,
-			"name": "C:\\Users\\User\\Documents\\2A SVELTEKIT WEB DEV\\plex-vercel-v2\\logs\\mcp-puppeteer-2025-08-02.log",
-			"hash": "4e402284925c05555cab7a7764eb742393182453089edd50bf906bc8c5db16c9"
-		}
-	],
-	"hashType": "sha256"
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\User\\Documents\\2A SVELTEKIT WEB DEV\\plex-vercel-v2\\logs\\.2b6261404bd93f3c7c5c9c96385311f1736a2570-audit.json",
+    "files": [
+        {
+            "date": 1754185615384,
+            "name": "C:\\Users\\User\\Documents\\2A SVELTEKIT WEB DEV\\plex-vercel-v2\\logs\\mcp-puppeteer-2025-08-02.log",
+            "hash": "4e402284925c05555cab7a7764eb742393182453089edd50bf906bc8c5db16c9"
+        },
+        {
+            "date": 1754281090933,
+            "name": "C:\\Users\\User\\Documents\\2A SVELTEKIT WEB DEV\\plex-vercel-v2\\logs\\mcp-puppeteer-2025-08-03.log",
+            "hash": "4832d8ccc2babfdbc6e9a141012285b7228bcb045e0fee335371c7981321e5cf"
+        }
+    ],
+    "hashType": "sha256"
 }

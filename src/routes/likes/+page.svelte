@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import Header from '$lib/components/Header.svelte';
 	import type { PageData } from './$types';
 
 	interface Props {
@@ -10,31 +11,14 @@
 </script>
 
 <div class="min-h-screen bg-gray-50">
-	<!-- Header -->
-	<header class="bg-white shadow-sm">
-		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<div class="flex items-center justify-between py-6">
-				<div class="flex items-center space-x-4">
-					<a href="/" class="font-medium text-blue-600 hover:text-blue-500"> ← Back to Movies </a>
-					<h1 class="text-3xl font-bold text-gray-900">My Liked Movies</h1>
-				</div>
-				<div class="flex items-center space-x-4">
-					<span class="text-gray-700">Welcome, {data.user.username}!</span>
-					<form method="post" action="/logout" use:enhance>
-						<button
-							type="submit"
-							class="rounded-md bg-gray-600 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700"
-						>
-							Sign Out
-						</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</header>
+	<Header user={data.user} showLikesButton={false} />
 
 	<!-- Content -->
 	<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+		<div class="mb-8">
+			<h1 class="text-3xl font-bold text-gray-900">My Liked Movies</h1>
+		</div>
+		
 		{#if data.likedMovies.length === 0}
 			<div class="py-16 text-center">
 				<svg

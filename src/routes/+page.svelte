@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
+	import Header from '$lib/components/Header.svelte';
 	import type { PageData } from './$types';
 
 	interface Props {
@@ -40,33 +41,7 @@
 </script>
 
 <div class="min-h-screen bg-gray-50">
-	<!-- Header -->
-	<header class="bg-white shadow-sm">
-		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<div class="flex items-center justify-between py-6">
-				<div class="flex items-center">
-					<h1 class="text-3xl font-bold text-gray-900">Movie Club</h1>
-				</div>
-				<div class="flex items-center space-x-4">
-					<span class="text-gray-700">Welcome, {data.user.username}!</span>
-					<a
-						href="/likes"
-						class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
-					>
-						My Likes
-					</a>
-					<form method="post" action="/logout" use:enhance>
-						<button
-							type="submit"
-							class="rounded-md bg-gray-600 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700"
-						>
-							Sign Out
-						</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</header>
+	<Header user={data.user} />
 
 	<!-- Search/Filter Section -->
 	<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -123,18 +98,25 @@
 				<div
 					class="overflow-hidden rounded-lg bg-white shadow-md transition-shadow duration-200 hover:shadow-lg"
 				>
-					<!-- Placeholder for movie poster -->
 					<div class="flex h-64 w-full items-center justify-center bg-gray-200">
-						<div class="p-4 text-center text-gray-500">
-							<svg class="mx-auto mb-2 h-12 w-12" fill="currentColor" viewBox="0 0 20 20">
-								<path
-									fill-rule="evenodd"
-									d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-									clip-rule="evenodd"
-								></path>
-							</svg>
-							<span class="text-sm">No Image</span>
-						</div>
+						{#if movie.posterUrl}
+							<img
+								src={movie.posterUrl}
+								alt={movie.title}
+								class="h-full w-full object-cover"
+							/>
+						{:else}	
+							<div class="p-4 text-center text-gray-500">
+								<svg class="mx-auto mb-2 h-12 w-12" fill="currentColor" viewBox="0 0 20 20">
+									<path
+										fill-rule="evenodd"
+										d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+										clip-rule="evenodd"
+									></path>
+								</svg>
+								<span class="text-sm">No Image</span>
+							</div>
+						{/if}
 					</div>
 
 					<div class="p-4">

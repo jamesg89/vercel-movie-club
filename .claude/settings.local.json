@@ -9,7 +9,10 @@
       "Bash(npm run lint)",
       "Bash(npm run format:*)",
       "Bash(npm run:*)",
-      "Bash(timeout 10 npm run dev)"
+      "Bash(timeout 10 npm run dev)",
+      "Bash(npx tsx:*)",
+      "Bash(rm:*)",
+      "Bash(mkdir:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
