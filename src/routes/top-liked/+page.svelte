@@ -10,14 +10,13 @@
 	let { data }: Props = $props();
 </script>
 
-<div class="min-h-screen bg-gray-50">
-	<Header user={data.user} />
+<Header user={data.user} />
 
 	<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 		<!-- Page Header -->
 		<div class="mb-8">
-			<h1 class="text-3xl font-bold text-gray-900">Top 20 Most Liked Movies</h1>
-			<p class="mt-2 text-gray-600">Discover the community's favorite films</p>
+			<h1 class="text-3xl font-bold" style="color: #000000;">Top 20 Most Liked Movies</h1>
+			<p class="mt-2" style="color: #111111;">Discover the community's favorite films</p>
 		</div>
 
 		<!-- Movies Grid -->
@@ -138,4 +137,3 @@
 			</div>
 		{/if}
 	</div>
-</div>

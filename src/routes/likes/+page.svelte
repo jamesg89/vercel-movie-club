@@ -10,13 +10,12 @@
 	let { data }: Props = $props();
 </script>
 
-<div class="min-h-screen bg-gray-50">
-	<Header user={data.user} showLikesButton={false} />
+<Header user={data.user} showLikesButton={false} />
 
 	<!-- Content -->
 	<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 		<div class="mb-8">
-			<h1 class="text-3xl font-bold text-gray-900">My Liked Movies</h1>
+			<h1 class="text-3xl font-bold" style="color: #000000;">My Liked Movies</h1>
 		</div>
 		
 		{#if data.likedMovies.length === 0}
@@ -116,4 +115,3 @@
 			</div>
 		{/if}
 	</div>
-</div>

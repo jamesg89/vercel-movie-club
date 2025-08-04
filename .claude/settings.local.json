@@ -20,5 +20,9 @@
   "enabledMcpjsonServers": [
     "github.com/browserless/puppeteer-mcp-server",
     "github.com/modelcontextprotocol/server-sequential-thinking"
+  ],
+  "disabledMcpjsonServers": [
+    "github.com/browserless/puppeteer-mcp-server",
+    "github.com/modelcontextprotocol/server-sequential-thinking"
   ]
 }

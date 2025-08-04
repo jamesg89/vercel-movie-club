@@ -13,7 +13,8 @@
 
 	let searchTitle = $state(data.searchTitle);
 	let searchYear = $state(data.searchYear);
-	let sortBy = $state('title'); // Default sort by title
+	let searchDirector = $state('');
+	let sortBy = $state('year-latest'); // Default sort by year (latest)
 
 	// Filter and sort movies based on search criteria and sort option
 	let filteredMovies = $derived(() => {
@@ -21,7 +22,9 @@
 			const titleMatch =
 				!searchTitle || movie.title.toLowerCase().includes(searchTitle.toLowerCase());
 			const yearMatch = !searchYear || movie.year.toString().includes(searchYear);
-			return titleMatch && yearMatch;
+			const directorMatch = 
+				!searchDirector || (movie.director && movie.director.toLowerCase().includes(searchDirector.toLowerCase()));
+			return titleMatch && yearMatch && directorMatch;
 		});
 
 		// Apply sorting
@@ -51,21 +54,21 @@
 	function clearSearch() {
 		searchTitle = '';
 		searchYear = '';
-		sortBy = 'title';
+		searchDirector = '';
+		sortBy = 'year-latest';
 		handleSearch();
 	}
 </script>
 
-<div class="min-h-screen bg-gray-50">
-	<Header user={data.user} />
+<Header user={data.user} />
 
 	<!-- Search/Filter Section -->
 	<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-		<div class="mb-8 rounded-lg bg-white p-6 shadow">
-			<h2 class="mb-4 text-lg font-medium text-gray-900">Search & Filter Movies</h2>
-			<div class="grid grid-cols-1 gap-4 md:grid-cols-4">
+		<div class="mb-8 rounded-lg p-6 shadow" style="background-color: #FDCA5A;">
+			<h2 class="mb-4 text-lg font-medium" style="color: #000000;">Search & Filter Movies</h2>
+			<div class="grid grid-cols-1 gap-4 md:grid-cols-5">
 				<div>
-					<label for="title-search" class="mb-2 block text-sm font-medium text-gray-700">
+					<label for="title-search" class="mb-2 block text-sm font-medium" style="color: #111111;">
 						Movie Title
 					</label>
 					<input
@@ -73,12 +76,13 @@
 						type="text"
 						bind:value={searchTitle}
 						placeholder="Search by title..."
-						class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+						class="w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2"
+						style="border-color: #111111; background-color: #f9fafc; color: #111111; focus:ring-color: #F7ADC8;"
 						oninput={handleSearch}
 					/>
 				</div>
 				<div>
-					<label for="year-search" class="mb-2 block text-sm font-medium text-gray-700">
+					<label for="year-search" class="mb-2 block text-sm font-medium" style="color: #111111;">
 						Year
 					</label>
 					<input
@@ -86,18 +90,36 @@
 						type="text"
 						bind:value={searchYear}
 						placeholder="Search by year..."
-						class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+						class="w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2"
+						style="border-color: #111111; background-color: #f9fafc; color: #111111; focus:ring-color: #F7ADC8;"
 						oninput={handleSearch}
 					/>
 				</div>
 				<div>
-					<label for="sort-select" class="mb-2 block text-sm font-medium text-gray-700">
+					<label for="director-select" class="mb-2 block text-sm font-medium" style="color: #111111;">
+						Developer/Studio
+					</label>
+					<select
+						id="director-select"
+						bind:value={searchDirector}
+						class="w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2"
+						style="border-color: #111111; background-color: #f9fafc; color: #111111; focus:ring-color: #F7ADC8;"
+					>
+						<option value="">All Developers</option>
+						{#each data.directors as director}
+							<option value={director}>{director}</option>
+						{/each}
+					</select>
+				</div>
+				<div>
+					<label for="sort-select" class="mb-2 block text-sm font-medium" style="color: #111111;">
 						Sort By
 					</label>
 					<select
 						id="sort-select"
 						bind:value={sortBy}
-						class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+						class="w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2"
+						style="border-color: #111111; background-color: #f9fafc; color: #111111; focus:ring-color: #F7ADC8;"
 					>
 						<option value="title">Title (A-Z)</option>
 						<option value="year-latest">Year (Latest)</option>
@@ -110,7 +132,8 @@
 					<button
 						type="button"
 						onclick={clearSearch}
-						class="w-full rounded-md bg-gray-600 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700"
+						class="w-full rounded-md px-4 py-2 text-sm font-medium transition-colors"
+						style="background-color: #111111; color: #E7E5E2;"
 					>
 						Clear Filters
 					</button>
@@ -120,7 +143,7 @@
 
 		<!-- Movies Grid -->
 		<div class="mb-6">
-			<h2 class="mb-4 text-xl font-semibold text-gray-900">
+			<h2 class="mb-4 text-xl font-semibold" style="color: #111111;">
 				{filteredMovies().length} Movies Found
 			</h2>
 		</div>
@@ -128,9 +151,10 @@
 		<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
 			{#each filteredMovies() as movie (movie.id)}
 				<div
-					class="overflow-hidden rounded-lg bg-white shadow-md transition-shadow duration-200 hover:shadow-lg"
+					class="overflow-hidden rounded-lg shadow-md transition-shadow duration-200 hover:shadow-lg"
+					style="background-color: #fff;"
 				>
-					<div class="flex h-64 w-full items-center justify-center bg-gray-200">
+					<div class="flex h-64 w-full items-center justify-center" style="background-color: #f9fafc;">
 						{#if movie.posterUrl}
 							<img
 								src={movie.posterUrl}
@@ -138,7 +162,7 @@
 								class="h-full w-full object-cover"
 							/>
 						{:else}	
-							<div class="p-4 text-center text-gray-500">
+							<div class="p-4 text-center" style="color: #111111;">
 								<svg class="mx-auto mb-2 h-12 w-12" fill="currentColor" viewBox="0 0 20 20">
 									<path
 										fill-rule="evenodd"
@@ -153,15 +177,15 @@
 
 					<div class="p-4">
 						<h3
-							class="mb-1 overflow-hidden text-sm font-semibold text-gray-900"
-							style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;"
+							class="mb-1 overflow-hidden text-sm font-semibold"
+							style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; color: #000000;"
 						>
 							{movie.title}
 						</h3>
 						<div class="mb-3 flex items-center justify-between">
-							<p class="text-sm text-gray-600">{movie.year}</p>
+							<p class="text-sm" style="color: #111111;">{movie.year}</p>
 							{#if movie.genre}
-								<span class="rounded-full bg-blue-100 px-2 py-1 text-xs text-blue-800">
+								<span class="rounded-full px-2 py-1 text-xs" style="background-color: #FDCA5A; color: #000000;">
 									{movie.genre}
 								</span>
 							{/if}
@@ -169,15 +193,15 @@
 
 						{#if movie.summary}
 							<p
-								class="mb-3 overflow-hidden text-xs text-gray-700"
-								style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;"
+								class="mb-3 overflow-hidden text-xs"
+								style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; color: #111111;"
 							>
 								{movie.summary}
 							</p>
 						{/if}
 
 						<!-- Total Likes Counter -->
-						<div class="mb-3 flex items-center text-xs text-gray-500">
+						<div class="mb-3 flex items-center text-xs" style="color: #111111;">
 							<svg class="mr-1 h-3 w-3 fill-current" viewBox="0 0 24 24">
 								<path
 									d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
@@ -191,9 +215,10 @@
 							<input type="hidden" name="movieId" value={movie.id} />
 							<button
 								type="submit"
-								class="flex w-full items-center justify-center rounded-md px-3 py-2 text-sm font-medium transition-colors duration-200 {movie.isLiked
-									? 'bg-red-100 text-red-700 hover:bg-red-200'
-									: 'bg-gray-100 text-gray-700 hover:bg-gray-200'}"
+								class="flex w-full items-center justify-center rounded-md px-3 py-2 text-sm font-medium transition-colors duration-200"
+								style="{movie.isLiked
+									? 'background-color: #FDCA5A; color: #000000;'
+									: 'background-color: #f9fafc; color: #111111;'}"
 							>
 								<svg
 									class="mr-2 h-4 w-4 {movie.isLiked ? 'fill-current' : 'stroke-current'}"
@@ -214,7 +239,8 @@
 		{#if filteredMovies().length === 0}
 			<div class="py-12 text-center">
 				<svg
-					class="mx-auto h-12 w-12 text-gray-400"
+					class="mx-auto h-12 w-12"
+					style="color: #111111;"
 					fill="none"
 					viewBox="0 0 24 24"
 					stroke="currentColor"
@@ -226,9 +252,8 @@
 						d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2h4a1 1 0 011 1v1a1 1 0 01-1 1h-1v11a2 2 0 01-2 2H6a2 2 0 01-2-2V7H3a1 1 0 01-1-1V5a1 1 0 011-1h4zM9 7v10h6V7H9z"
 					/>
 				</svg>
-				<h3 class="mt-2 text-sm font-medium text-gray-900">No movies found</h3>
-				<p class="mt-1 text-sm text-gray-500">Try adjusting your search criteria.</p>
+				<h3 class="mt-2 text-sm font-medium" style="color: #000000;">No movies found</h3>
+				<p class="mt-1 text-sm" style="color: #111111;">Try adjusting your search criteria.</p>
 			</div>
 		{/if}
 	</div>
-</div>

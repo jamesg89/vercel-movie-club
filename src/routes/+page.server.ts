@@ -1,7 +1,7 @@
 import { redirect, fail } from '@sveltejs/kit';
 import { db } from '$lib/server/db';
 import { movie, userLike } from '$lib/server/db/schema';
-import { eq, and, count } from 'drizzle-orm';
+import { eq, and, count, isNotNull, sql } from 'drizzle-orm';
 import { invalidateSession, deleteSessionTokenCookie } from '$lib/server/auth';
 import type { PageServerLoad, Actions } from './$types';
 
@@ -39,12 +39,20 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 
 	const likedMovieIds = new Set(userLikes.map((like) => like.movieId));
 
+	// Get unique directors for the filter dropdown
+	const directors = await db
+		.selectDistinct({ director: movie.director })
+		.from(movie)
+		.where(isNotNull(movie.director))
+		.orderBy(movie.director);
+
 	return {
 		user: locals.user,
 		movies: movies.map((movie) => ({
 			...movie,
 			isLiked: likedMovieIds.has(movie.id)
 		})),
+		directors: directors.map(d => d.director).filter(Boolean),
 		searchTitle,
 		searchYear
 	};
